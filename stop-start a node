@@ -1,0 +1,39 @@
+# 新增或移除cluster的節點時，可以這樣
+> https://cloud.tencent.com/developer/article/1771326
+
+```
+PUT _cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.exclude._ip": "10.1.22.129"
+  }
+}
+
+执行结果：
+{
+  "acknowledged" : true,
+  "persistent" : { },
+  "transient" : {
+    "cluster" : {
+      "routing" : {
+        "allocation" : {
+          "exclude" : {
+            "_ip" : "10.1.22.129"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+```
+curl -XPUT http://0.0.0.0:9200/_cluster/settings?pretty -d '{"transient":{"cluster.routing.allocation.exclude._ip": null}}'
+
+PUT _cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.exclude._ip": null
+  }
+}
+```
